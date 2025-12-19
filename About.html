@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ================= RESET ================= */
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {font-family: Arial, sans-serif; line-height:1.7; background:#fff; color:#333;}
+    a{text-decoration:none;color:inherit;}
+
+    /* ================= HEADER ================= */
+    header {
+      position:absolute; top:0; left:0; width:100%;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:20px 60px; z-index:10;
+    }
+    .logo img {width:90px;}
+    nav.desktop-nav ul {
+      display:flex; list-style:none; gap:30px;
+    }
+    nav.desktop-nav ul li a {color:white; font-size:18px; transition:0.3s;}
+    nav.desktop-nav ul li a:hover {color:#c8c8ff;}
+    .call-btn {
+      background:#4169e1; padding:10px 25px; border-radius:5px;
+      color:white; font-weight:bold;
+    }
+
+    /* Hamburger */
+    .menu-btn {
+      display:none; width:42px; height:42px;
+      background: rgba(255,255,255,0.15);
+      border-radius:6px; position:relative; cursor:pointer;
+      align-items:center; justify-content:center;
+    }
+    .menu-btn span,
+    .menu-btn span::before,
+    .menu-btn span::after {
+      content:''; position:absolute; width:22px; height:3px;
+      background:white; border-radius:3px; transition:0.3s;
+    }
+    .menu-btn span::before {top:-7px;}
+    .menu-btn span::after {top:7px;}
+    .menu-btn.active span {background:transparent;}
+    .menu-btn.active span::before {transform:rotate(45deg); top:0;}
+    .menu-btn.active span::after {transform:rotate(-45deg); top:0;}
+
+    /* Mobile Nav */
+    .mobile-nav {
+      position:fixed; top:0; right:-260px; width:260px; height:100vh;
+      background:#071332; padding:80px 25px; display:flex;
+      flex-direction:column; gap:25px; transition:0.35s ease;
+      z-index:999; overflow-y:auto;
+    }
+    .mobile-nav.show {right:0;}
+    .mobile-nav ul {list-style:none; display:flex; flex-direction:column; gap:20px;}
+    .mobile-nav ul li a {color:white; font-size:18px;}
+    .mobile-nav ul li a:hover {opacity:0.8;}
+
+    /* ================= HERO ================= */
+    .hero {
+      position:relative; width:100%; height:480px;
+      background:url('bg.jpg') center/cover no-repeat;
+    }
+    .hero .overlay {
+      position:absolute; inset:0; background:rgba(20,40,100,0.65);
+    }
+    .hero h1 {
+      position:absolute; bottom:80px; left:100px;
+      color:white; font-size:70px; font-weight:bold;
+    }
+
+    /* ================= CONTENT ================= */
+    .container {
+      width:90%; max-width:1200px; margin:auto; padding:40px 0;
+    }
+    .heading-small {color:#0073e6; font-weight:bold; font-size:14px;}
+    .container h1 {font-size:38px; font-weight:700; margin:10px 0 30px; color:#0056cc;}
+    h2 {color:#0056cc; margin-top:40px; font-size:26px;}
+    .about-section {display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+    .about-section p {font-size:16px;}
+    ul li {margin-bottom:10px;}
+
+    /* ================= GINGER SECTION ================= */
+    .ginger-section {width:100%; height:450px; background:url('dry.png') center/cover no-repeat; position:relative;}
+    .ginger-section .overlay {
+      width:100%; height:100%; background:rgba(0,0,0,0.25);
+      display:flex; justify-content:center; align-items:center;
+      flex-direction:column; color:white; text-align:center; padding:20px;
+    }
+    .ginger-section h2 {font-size:40px; margin:0; font-weight:700;}
+    .ginger-section p {font-size:20px; margin-top:10px;}
+
+    /* ================= FOOTER ================= */
+    .footer-bg {background-image:url('10.jfif'); background-size:cover; background-position:center; padding:90px 0;}
+    .footer-content {
+      width:90%; margin:auto; color:white;
+      display:flex; justify-content:space-between; text-align:center; flex-wrap:wrap; gap:25px;
+    }
+    .footer-col {width:32%; min-width:260px; font-size:17px;}
+    .call-number {margin-top:25px; font-size:32px; font-weight:bold;}
+    .social-icons a {
+      margin:0 8px; font-size:20px; color:white;
+      background:rgba(255,255,255,0.25); padding:10px; border-radius:5px;
+    }
+    .copyright {
+      background:#152a4d; text-align:center; padding:15px 0; color:white; font-size:15px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media(max-width:992px){
+      header {padding:20px 30px;}
+      nav.desktop-nav, .call-btn {display:none;}
+      .menu-btn {display:flex;}
+      .hero h1 {font-size:55px; left:50px;}
+      .about-section {grid-template-columns:1fr;}
+      .footer-col {width:45%;}
+    }
+    @media(max-width:600px){
+      header {padding:15px 20px;}
+      .logo img {width:70px;}
+      .hero {height:350px;}
+      .hero h1 {font-size:36px; left:20px; bottom:40px;}
+      .footer-col {width:100%;}
+      .ginger-section h2 {font-size:28px;}
+      .ginger-section p {font-size:16px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="overlay"></div>
+
+    <header>
+      <div class="logo">
+        <img src="tt.png" alt="Logo" />
+      </div>
+
+      <nav class="desktop-nav">
+        <ul>
+          <li><a href="NO.HTML">Home</a></li>
+              <a class="active" href="#">About</a>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Products</a></li>
+          <li><a href="#">Staff Mail</a></li>
+        </ul>
+      </nav>
+
+      <a href="tel:+2348025484444" class="call-btn">+234-802-548-4444</a>
+
+      <!-- Hamburger Button -->
+      <div class="menu-btn"><span></span></div>
+    </header>
+
+    <h1>ABOUT US</h1>
+  </div>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav">
+    <ul>
+      <li><a href="NO.HTML">Home</a></li>
+          <a class="active" href="#">About</a>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Products</a></li>
+      <li><a href="#">Staff Mail</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="heading-small">SHORT STORY</div>
+    <h1>ABOUT Yashuni Agricultural</h1>
+
+    <div class="about-section">
+      <div>
+        <p><strong>Yashuni Agricultural Products</strong> is more than just a business–it is the continuation of a proud family legacy built on trust, hard work, and a deep commitment to excellence. Rooted in generations of agricultural expertise, our company has grown into a global player in agro-export, connecting the richness of Africa’s agricultural produce to markets around the world.</p>
+
+        <h2>OUR STORY</h2>
+        <p>The story of Yashuni Agricultural Products began decades ago with a simple yet powerful vision: to harness the abundant agricultural resources of Africa and create opportunities for local farmers while supplying the world with premium-quality products.</p>
+
+        <h2>OUR MISSION</h2>
+        <p>To bridge the gap between Africa’s agricultural wealth and global demand, while fostering sustainable practices and uplifting the communities we serve.</p>
+
+        <h2>OUR VISION</h2>
+        <p>To be a leading agro-export company recognized worldwide for quality, integrity, and innovation, while honoring the family legacy that started it all.</p>
+      </div>
+
+      <div>
+        <h2>THE CEO’S LEGACY</h2>
+        <p>Our CEO, Yahaya Ali Abubakar, inherited the business as part of a cherished family legacy. Growing up, they were immersed in the values, traditions, and expertise that shaped the company’s success. Under their leadership, the business has not only preserved its core values but also embraced innovation and expansion to meet the demands of modern markets.</p>
+
+        <ul>
+          <li><strong>A Legacy of Excellence:</strong> The CEO’s upbringing instilled a deep understanding of the agricultural sector and a passion for empowering farming communities.</li>
+          <li><strong>Modern Vision:</strong> While honoring traditional methods, the CEO has introduced cutting-edge technologies and sustainable practices to enhance productivity and quality.</li>
+          <li><strong>Global Reach:</strong> Guided by a forward-thinking mindset, the CEO has expanded the company’s operations beyond borders, establishing strong partnerships across continents.</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="ginger-section">
+      <div class="overlay">
+        <p></p>
+      </div>
+    </section>
+  </div>
+
+  <section class="footer-section">
+    <div class="footer-bg">
+      <div class="footer-content">
+        <div class="footer-col left">
+          <p>Mon-Sat: 10:00 am – 5:00 pm</p>
+          <p>Saturday: 12:00 pm – 4:00 pm</p>
+        </div>
+
+        <div class="footer-col center">
+          <p>tijjanialmustapha8@gmail.com</p>
+          <p>director@yanshui.ng</p>
+
+          <h2 class="call-number">CALL – +234 802-841-5787</h2>
+
+          <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://google.com" target="_blank"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+
+        <div class="footer-col right">
+          <p>No. 25 Junguru Gabas<br>
+          behind NNPC Filling Station<br>
+          Dawakau, DawakinTofa LGA<br>
+          Kano, Nigeria</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="copyright">
+    <p>Copyright © 2025 Yashuni Agricultural Product Nigeria Limited | Powered by [Byte Leads Solution]</p>
+  </footer>
+
+  <!-- ================= JS FOR HAMBURGER ================= -->
+  <script>
+const menuBtn = document.querySelector('.menu-btn');
+const mobileNav = document.querySelector('.mobile-nav');
+
+// Toggle menu on button click
+menuBtn.addEventListener('click', (e) => {
+  e.stopPropagation(); // prevents triggering document click
+  menuBtn.classList.toggle('active');
+  mobileNav.classList.toggle('show');
+});
+
+// Close menu if click outside
+document.addEventListener('click', (e) => {
+  if(mobileNav.classList.contains('show') && !mobileNav.contains(e.target) && !menuBtn.contains(e.target)) {
+    mobileNav.classList.remove('show');
+    menuBtn.classList.remove('active');
+  }
+});
+</script>
+
+</body>
+</html>

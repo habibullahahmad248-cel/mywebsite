@@ -1,0 +1,954 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yashuni— Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+   /* RESET */
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:"Segoe UI", Roboto, Arial, sans-serif;color:white;}
+a{text-decoration:none;color:white;}
+
+/* HEADER */
+header{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  padding:15px 25px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index:10;
+}
+.logo img{height:160px;max-height:12vw;}
+
+/* NAVBAR (Desktop/Laptop) */
+nav{
+  display:flex;
+  gap:30px;
+  align-items:center;
+}
+nav a{font-size:17px;font-weight:500;opacity:0.8;}
+nav a:hover, nav a.active{opacity:1;}
+
+.phone-btn{
+  background:#4b7cff;
+  padding:10px 20px;
+  border-radius:5px;
+  font-weight:bold;
+  white-space:nowrap;
+  box-shadow:0px 6px 18px rgba(75,124,255,0.3);
+}
+
+/* HERO SECTION */
+.hero{
+  height:100vh;
+  background:url('sesame.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  padding-left:60px;
+  position:relative;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(10,25,70,0.65);
+}
+.hero-content{position:relative; z-index:5;}
+.eyebrow{font-size:16px;font-weight:bold;margin-bottom:12px;}
+h1{font-size:68px;font-weight:800;line-height:1;}
+
+/* HAMBURGER BUTTON */
+.menu-btn{
+  width:42px;
+  height:42px;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(5px);
+  display:none;
+  border-radius:6px;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,0.3);
+  position:relative;
+  z-index:1000;
+}
+.menu-btn span,
+.menu-btn span::before,
+.menu-btn span::after{
+  position:absolute;
+  width:22px;
+  height:3px;
+  background:white;
+  transition:0.3s ease;
+  border-radius:3px;
+}
+.menu-btn span::before{content:"";top:-7px;}
+.menu-btn span::after{content:"";top:7px;}
+.menu-btn.active span{background:transparent;}
+.menu-btn.active span::before{transform:rotate(45deg);top:0;}
+.menu-btn.active span::after{transform:rotate(-45deg);top:0;}
+
+/* MOBILE NAV */
+.mobile-nav{
+  position:fixed;
+  top:0;
+  right:-260px;
+  width:260px;
+  height:100vh;
+  background:#071332;
+  padding:80px 25px;
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+  transition:0.35s ease;
+  z-index:999;
+  overflow-y:auto;
+}
+.mobile-nav.show{right:0;}
+
+/* OVERLAY */
+#overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(1px);
+  display:none;
+  z-index:500;
+}
+#overlay.show{display:block;}
+
+/* MEDIA QUERIES */
+@media(max-width:1024px){
+  nav{display:none;}
+  .menu-btn{display:flex;}
+}
+@media(max-width:700px){
+  .logo img{height:95px;}
+  .hero{padding-left:25px;}
+  h1{font-size:38px;line-height:1.1;}
+  .eyebrow{font-size:13px;}
+  .phone-btn{padding:8px 14px;font-size:14px;}
+}
+/* ABOUT SECTION - uses a full-width background image with top & bottom cropped visuals */
+.about-section{
+  position:relative;
+  min-height:100vh;
+  padding:80px 40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background-image: url('b3.jpg'); /* <- replace or keep bg.jpg in same folder */
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+/* Add a subtle overlay so the white card stands out (matching screenshot feel) */
+.about-section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(255,255,255,0.0); /* keep transparent so the card looks like floating white block */
+  pointer-events:none;
+}
+
+/* White content card */
+.content-card{
+  position:relative;
+  width: calc(100% - 160px);
+  max-width:1000px;
+  background:#ffffff;
+  padding:46px 56px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  border-radius:2px;
+  z-index:2;
+  /* mimic screenshot layout: white wide rectangle with text aligned left */
+}
+
+/* kicker / small blue title */
+.kicker{
+  color:#2770e6; /* blue like screenshot */
+  font-weight:700;
+  letter-spacing:1px;
+  margin-bottom:18px;
+  font-size:18px;
+}
+
+/* lead paragraph slightly darker & medium weight */
+.lead{
+  color:#333;
+  font-size:15px;
+  line-height:1.6;
+  margin-bottom:14px;
+}
+
+/* normal paragraphs */
+.content-card p{
+  color:#555;
+  font-size:15px;
+  line-height:1.7;
+  margin-bottom:14px;
+}
+
+/* big section title similar to "OUR HERITAGE" */
+.section-title{
+  margin-top:8px;
+  margin-bottom:10px;
+  font-size:28px;
+  font-weight:800;
+  color:#333;
+  letter-spacing:0.5px;
+}
+
+/* Responsive tweaks */
+@media (max-width:1024px){
+  .content-card{ padding:36px 34px; width: calc(100% - 100px); }
+}
+
+@media (max-width:720px){
+  .about-section{ padding:40px 18px; background-position: center 20%; }
+  .content-card{ padding:24px 18px; width:100%; box-shadow:0 6px 20px rgba(0,0,0,0.10) }
+  .section-title{ font-size:22px }
+  .kicker{ font-size:16px }
+  .lead, .content-card p{ font-size:15px }
+}
+/* SAFE PRODUCTS SECTION — Prefixed with dt- to avoid conflicts */
+
+.dt-products {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 20px 60px;
+    font-family: inherit;
+}
+
+.dt-products-header { margin-bottom: 26px; }
+
+.dt-small {
+    color: #2b84e6;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.dt-main-title {
+    font-size: 36px;
+    color: #1370d3;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dt-intro {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+}
+
+.dt-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    margin-top: 20px;
+}
+
+.dt-product-img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #eee;
+}
+
+.dt-product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s ease;
+}
+
+.dt-product-img:hover img {
+    transform: scale(1.05);
+}
+
+.dt-product-title {
+    margin-top: 14px;
+    font-size: 18px;
+    color: #1f6fd6;
+    font-weight: 700;
+}
+
+/* responsive */
+@media (max-width: 720px){
+    .dt-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px){
+    .dt-products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* CLIENTS SECTION */
+.clients-section {
+    position: relative;
+    background: url('ag.png') center/cover no-repeat;
+    padding: 80px 0;
+}
+
+.clients-overlay {
+    background: rgba(0, 33, 79, 0.72); /* Blue overlay */
+    padding: 70px 20px;
+    text-align: center;
+}
+
+.clients-title {
+    font-size: 40px;
+    color: #ffffff;
+    font-weight: 800;
+    margin-bottom: 50px;
+}
+
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 70px;
+    justify-items: center;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.client-item {
+    width: 250px;
+    height: 250px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+}
+
+.client-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .clients-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .client-item {
+        width: 200px;
+        height: 200px;
+    }
+}
+img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.policy-section {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 80px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.policy-content {
+  flex: 1;
+  font-family: Arial, sans-serif;
+}
+
+.policy-content h2 {
+  color: #004aad;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.policy-content p {
+  color: #333;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.policy-content h3 {
+  margin-top: 30px;
+  color: #004aad;
+}
+
+.products-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.products-list li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #004aad;
+}
+
+.policy-image {
+  flex: 1;
+}
+
+.policy-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+/* TABLET */
+@media (max-width: 992px) {
+  .policy-section {
+    padding: 30px 40px;
+    flex-direction: column;
+  }
+
+  .policy-image {
+    margin-top: 20px;
+  }
+}
+
+/* PHONE */
+@media (max-width: 600px) {
+  .policy-section {
+    padding: 20px;
+  }
+
+  .policy-content h2 {
+    font-size: 22px;
+  }
+
+  .policy-content p {
+    font-size: 15px;
+  }
+
+  .products-list li {
+    font-size: 15px;
+  }
+}
+
+/* Dark overlay */
+.section-why-export::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Title – NOW CENTERED */
+.section-why-export .section-title {
+    position: relative;
+    z-index: 2;
+    text-align: center;      /* ← gyara nan */
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+/* Content grid */
+.section-why-export .content-boxes {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+/* Each box */
+.section-why-export .box {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(4px);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #fff;
+}
+
+/* Icons */
+.section-why-export .box img {
+    width: 55px;
+    margin-bottom: 12px;
+}
+
+/* Text */
+.section-why-export .box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.section-why-export .box p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+/* button ya tsaya tsakiyar section */
+#orderButton {
+  display: block;        /* domin margin auto yayi aiki */
+  margin: 30px auto 0;   /* 30px daga rubutu, auto left-right = tsakiyar */
+  padding: 15px 35px;
+  font-size: 18px;
+  border: none;
+  border-radius: 6px;
+  background: #1e63e9;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#orderButton:hover {
+  background: #1545a0;
+}
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* FOOTER */
+.footer-section {
+    width: 100%;
+}
+
+.footer-bg {
+    background-image: url('10.jfif'); /* ka maye gurbin da naka image */
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: auto;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: wrap; /* allow wrapping for smaller screens */
+    gap: 30px;
+}
+
+.footer-col {
+    flex: 1 1 250px; /* responsive width */
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.call-number {
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 6px;
+    font-size: 20px;
+    color: white;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    background: #1A73E8;
+    color: #fff;
+}
+
+.copyright {
+    background: #152a4d;
+    text-align: center;
+    padding: 15px 10px;
+    color: white;
+    font-size: 14px;
+}
+
+/* MEDIA QUERIES */
+@media(max-width: 900px){
+    .footer-content {
+        justify-content: center;
+    }
+    .footer-col {
+        flex: 1 1 45%;
+    }
+}
+
+@media(max-width: 600px){
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 25px;
+    }
+    .footer-col {
+        flex: 1 1 100%;
+    }
+    .call-number {
+        font-size: 24px;
+    }
+    .social-icons a {
+        padding: 8px;
+        font-size: 18px;
+        margin: 5px;
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px){
+    .footer-col { width: 48%; } /* two columns on tablet */
+}
+
+@media(max-width: 600px){
+    .footer-content { flex-direction: column; text-align: center; }
+    .footer-col { width: 100%; }
+    .call-number { font-size: 24px; }
+    .social-icons a { padding: 8px; font-size: 18px; margin: 5px; }
+}
+/* General Navigation */
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #111;
+  color: white;
+}
+
+.navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+/* HIDE menu icon on computer */
+.menu-icon {
+  font-size: 30px;
+  cursor: pointer;
+  display: none;
+}
+
+/* MOBILE VIEW */
+@media (max-width: 768px) {
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: #111;
+    width: 200px;
+    height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    text-align: left;
+    padding-left: 20px;
+    transition: 0.4s;
+  }
+
+  /* Show hamburger icon on phone */
+  .menu-icon {
+    display: block;
+  }
+
+  /* Hide menu on phone by default */
+  .nav-links.open {
+    height: 200px;
+    padding-top: 15px;
+  }
+}
+
+.close-btn {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  text-align: right;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+
+
+
+
+
+
+
+
+  </style>
+
+</head>
+<body>
+
+<header>
+  <div class="logo"><img src="tt.png" alt="Star Logo"></div>
+
+  <nav>
+    <a class="active" href="#">Home</a>
+    <a href="About.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="#">Contact</a>
+    <a href="#">Products</a>
+    <a href="#">Staff Mail</a>
+  </nav>
+
+  <a href="tel:+2348028415787" class="phone-btn">+234-802-841-5787</a>
+
+  <div class="menu-btn" onclick="toggleMenu()"><span></span></div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+   <a class="active" href="#">Home</a>
+  <a href="About.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="#">Contact</a>
+  <a href="#">Products</a>
+  <a href="#">Staff Mail</a>
+</div>
+
+<div id="overlay" onclick="toggleMenu()"></div>
+<div class="mobile-nav" id="mobileNav">
+    <div class="close-btn" onclick="toggleMenu()">X</div>
+    <a class="active" href="#">Home</a>
+    <a href="About.html">About</a>
+    <a href="services.html">Services</a>
+    <a href="#">Contact</a>
+    <a href="#">Products</a>
+    <a href="#">Staff Mail</a>
+</div>
+
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">WELCOME TO OUR OFFICIAL WEBSITE</div>
+    <h1>YANSHUNI AGRICULTURAL<br>PRODUCTS NIGERIA L.T.D</h1>
+  </div>
+</section>
+
+   <main class="about-section">
+    <!-- background decorative image is handled in CSS -->
+    <div class="content-card">
+      <h3 class="kicker">ABOUT US</h3>
+
+      <p class="lead">
+        Welcome to <strong>Yashuni Agricultural Nigeria Limited</strong>, a premier agro-export company committed to showcasing the richness of Africa’s agricultural heritage to the global market.
+      </p>
+
+      <p>
+        Founded on the principles of quality, sustainability, and ethical trade, we pride ourselves on delivering premium agricultural products that meet and exceed international standards. Our mission is not only to provide exceptional products but also to create meaningful connections between African farmers and global consumers, fostering growth and mutual prosperity.
+      </p>
+
+      <h2 class="section-title">OUR HERITAGE</h2>
+
+      <p>
+        The name <strong>Yashuni</strong> embodies trust, resilience, and a legacy of excellence in the agricultural sector. Built on years of experience and a passion for agriculture, we have established ourselves as a reliable partner for high-quality agro-exports.
+      </p>
+
+      <p>
+        From the golden grains of Africa’s fertile soils to the vibrant spices that define its cuisines, we aim to bring the continent’s agricultural treasures to the world while ensuring that the people behind the produce—our farmers—are empowered and rewarded fairly.
+      </p>
+    </div>
+  </main>
+  <section class="dt-products">
+    
+        <p class="dt-small">SOME OF</p>
+        <h1 class="dt-main-title">OUR PRODUCTS</h1>
+        <p class="dt-intro">
+            At <strong>Yashuni Agricultural</strong>, we provide top-quality agricultural exports sourced ethically from across Africa.
+        </p>
+   
+
+    <div class="dt-products-grid">
+        <div class="dt-product">
+            <div class="dt-product-img">
+                <img src="sesame.jpg" alt="Sesame">
+            </div>
+            <h3 class="dt-product-title">SESAME</h3>
+        </div>
+
+        <div class="dt-product">
+            <div class="dt-product-img">
+                <img src="hibiscus.jpg" alt="Hibiscus">
+            </div>
+            <h3 class="dt-product-title">HIBISCUS</h3>
+        </div>
+
+        <div class="dt-product">
+            <div class="dt-product-img">
+                <img src="soya beans.jpg" alt="Soya Beans">
+            </div>
+            <h3 class="dt-product-title">SOYA BEANS</h3>
+        </div>
+    </div>
+</section>
+<section class="clients-section">
+    <div class="clients-overlay">
+        <h2 class="clients-title">SOME OUR CLIENTS</h2>
+
+        <div class="clients-grid">
+            <div class="client-item">
+                <img src="olam.png" alt="Olam Logo">
+            </div>
+
+            <div class="client-item">
+                <img src="wfp.png" alt="WFP Logo">
+            </div>
+
+            <div class="client-item">
+                <img src="grand.png" alt="Grand Cereals Logo">
+            </div>
+
+            <div class="client-item">
+                <img src="gerawa.png" alt="Gerawa Logo">
+            </div>
+        </div>
+    </div>
+</section>
+<section class="policy-section">
+  <div class="policy-content">
+    <h2>OUR STRATEGIC POLICY</h2>
+    <p>
+      In line with the Government’s Policy on Private sector driven Economy, we have began a process of reforming our strategic policy for the years ahead, a process of restructuring and repositioning, designed as a response to the challenges affecting our economy, since it is these challenges that will create opportunities for future growth and to adequately fortify our Company for years ahead. Under this policy funds are allocated to services where the company can excel, to the acquisition of modern Machineries and relevant software to improved service delivery, to provide a conducive business environment and an integrated manpower development program being pursued by the management.
+    </p>
+
+    <h3>PRODUCTS</h3>
+    <ul class="products-list">
+      <li>✔ MILLET</li>
+      <li>✔ SORGHUM</li>
+      <li>✔ GROUNDNUT</li>
+      <li>✔ RICE</li>
+      <li>✔ MAIZE</li>
+    </ul>
+  </div>
+
+  <div class="policy-image">
+    <img src="b2.webp" alt="Bags Image">
+  </div>
+</section>
+
+<!-- WHY EXPORT WITH US SECTION -->
+<section style="padding: 80px 20px; text-align: center; background: #ffffff;">
+
+
+<h3 style="color:#1e46ff; font-size:14px; font-weight:700; letter-spacing:1px;">
+Yashuni Agricultural product SPECIALIZES IN THE EXPORT OF PREMIUM AGRICULTURAL PRODUCTS FROM AFRICA TO MARKETS ACROSS THE GLOBE. WITH A STRONG COMMITMENT TO QUALITY, RELIABILITY, AND SUSTAINABILITY, WE BRIDGE THE GAP BETWEEN AFRICA'S RICH AGRICULTURAL RESOURCES AND THE NEEDS OF INTERNATIONAL CUSTOMERS.
+</h3>
+
+
+<h1 style="margin-top:40px; font-size:42px; color:#1e46ff; font-weight:800;">
+WHY EXPORT WITH US?
+</h1>
+
+
+<div style="max-width:800px; margin:40px auto; text-align:left; font-size:18px; line-height:30px; color:#333;">
+<p><strong>Unmatched Quality:</strong> Stringent quality checks ensure premium-grade products.</p>
+<p><strong>End-to-End Support:</strong> Comprehensive export services, from sourcing to delivery.</p>
+<p><strong>Timely Delivery:</strong> Reliable shipping and logistics solutions.</p>
+<p><strong>Global Expertise:</strong> Years of experience navigating international markets and regulatory requirements.</p>
+<p><strong>Sustainability and Ethics:</strong> Commitment to fair trade, eco‑friendly practices, and farmer empowerment.</p>
+</div>
+  <button id="orderButton">Place Your Order Here</button>
+</section>
+<section class="footer-section">
+    <div class="footer-bg">
+        <div class="footer-content">
+
+            <div class="footer-col left">
+                <p>Mon-Sat: 10:00 am – 5:00 pm</p>
+                <p>Saturday: 12:00 pm – 4:00 pm</p>
+            </div>
+
+            <div class="footer-col center">
+                <p>tijjanialmustapha8@gmail.com</p>
+                <p>director@yanshui.ng</p>
+                <h2 class="call-number">CALL – +234 802-841-5787</h2>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://google.com" target="_blank"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col right">
+                <p>No. 25 Junguru Gabas<br>
+                behind NNPC Filling Station<br>
+                Dawakau, DawakinTofa LGA<br>
+                Kano, Nigeria</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="copyright">
+    <p>Copyright © 2025 Yashuni Agricultural Product Nigeria Limited | Powered by [Byte Leads Solution]</p>
+</footer>
+<script>
+document.getElementById("orderButton").addEventListener("click", function() {
+  // Za ka iya maye gurbin link ɗin da naka
+  window.location.href = "https://example.com/order"; 
+  // ko: alert("Thank you for your interest! We will contact you soon.");
+});
+
+document.getElementById("orderBtn6").onclick = function () {
+  var phone = "+2348012345678";
+  var msg = "Hello, I would like to place an order for the Chicken Shawarma!";
+  window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(msg), "_blank");
+}
+function toggleMenu(){
+  const btn = document.querySelector('.menu-btn');
+  const nav = document.getElementById('mobileNav');
+  const overlay = document.getElementById('overlay');
+
+  btn.classList.toggle('active');  // hamburger -> X
+  nav.classList.toggle('show');    // show/hide menu
+  overlay.classList.toggle('show'); // show/hide overlay
+}
+</script>
+
+
+
+
+</body>
+</html>

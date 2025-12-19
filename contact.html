@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dan Turaku General Merchant Limited</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family:"Arial", sans-serif; background:#fff; color:#333; overflow-x:hidden;}
+
+    /* HEADER */
+    .header {position:relative; height:90vh; background:url('hibiscus.jpg') no-repeat center center/cover; color:#fff;}
+    .overlay {position:absolute; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,80,0.6); z-index:1;}
+
+    /* NAVBAR */
+    .navbar {position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center; padding:15px 30px;}
+    .logo img {width:65px;}
+    .nav-links {list-style:none; display:flex; align-items:center; gap:18px; transition:all 0.3s;}
+    .nav-links li a {color:white; text-decoration:none; font-weight:400; transition:0.3s;}
+    .nav-links li a:hover, .nav-links li a.active {color:#69b9ff;}
+    .phone-box a {background:#4169e1; color:white; padding:8px 14px; border-radius:4px; text-decoration:none; font-weight:600;}
+    .phone-box a:hover {background:#244edb;}
+
+    /* DROPDOWN */
+    .dropdown {position:relative;}
+    .dropdown-content {max-height:0; opacity:0; overflow:hidden; position:absolute; top:35px; left:0; background: rgba(0,0,90,0.95); border-radius:5px; width:190px; transition:all 0.4s;}
+    .dropdown-content li {list-style:none;}
+    .dropdown-content a {display:block; padding:10px 20px; color:#fff; text-decoration:none;}
+    .dropdown-content a:hover {background-color:#2f4bcf;}
+    .dropdown.open .dropdown-content {max-height:500px; opacity:1;}
+    .dropbtn::after {content:' ▾'; transition:transform 0.3s;}
+
+    /* HAMBURGER */
+    .menu-toggle {display:none; flex-direction:column; cursor:pointer; gap:6px; z-index:1001;}
+    .bar {width:28px; height:3px; background:#fff; border-radius:5px;}
+    .menu-toggle.active .bar:nth-child(1) {transform:rotate(45deg) translate(5px,6px);}
+    .menu-toggle.active .bar:nth-child(2){opacity:0;}
+    .menu-toggle.active .bar:nth-child(3){transform:rotate(-45deg) translate(6px,-6px);}
+
+    /* HERO CONTENT */
+    .content {position:relative; z-index:2; top:50%; transform:translateY(-50%); text-align:left;}
+    .content h1 {font-size:3.5rem; font-weight:800; color:#fff;}
+
+    /* CONTACT FOOTER */
+    .contact-footer {background:#fff; color:#333; padding:60px 30px 40px; text-align:left; border-top:1px solid #dcdcdc;}
+    .contact-container {max-width:1100px; margin:0 auto;}
+    .contact-header {margin-bottom:40px;}
+    .contact-header .small-title {color:#4169e1; font-size:0.85rem; font-weight:bold; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;}
+    .contact-header h2 {font-size:2rem; color:#2e5ce6; font-weight:800;}
+    .contact-info {display:flex; justify-content:space-between; flex-wrap:wrap; gap:15px;}
+    .contact-box {flex:1; min-width:250px;}
+    .contact-box .icon {margin-bottom:12px;}
+    .contact-box .icon img {width:35px; opacity:0.5;}
+    .contact-box h3 {color:#2e5ce6; font-size:1.2rem; font-weight:800; margin-bottom:8px;}
+    .contact-box p {font-size:0.95rem; line-height:1.5;}
+    .contact-box a {color:#333; text-decoration:none;}
+    .contact-box a:hover {color:#2e5ce6;}
+
+    /* APPOINTMENT FORM */
+    .appointment-section {background:#fff; color:#333; padding:60px 30px; border-top:1px solid #e0e0e0;}
+    .appointment-container {max-width:1000px; margin:0 auto; display:flex; flex-direction:column;}
+    .form-header {margin-bottom:35px;}
+    .form-header .small-title {font-size:0.85rem; color:#2e5ce6; font-weight:bold; text-transform:uppercase; letter-spacing:1px;}
+    .form-header h2 {color:#2e5ce6; font-size:1.8rem; font-weight:800; margin-top:5px;}
+    .appointment-form {display:flex; flex-direction:column; gap:20px;}
+    .form-group {display:flex; flex-direction:column;}
+    .form-group label {font-weight:600; margin-bottom:4px; font-size:0.9rem;}
+    .appointment-form input, .appointment-form textarea {padding:10px; border:1px solid #d6d6d6; border-radius:3px; background:#fafafa; font-size:0.95rem; color:#333; outline:none; transition:0.3s;}
+    .appointment-form input:focus, .appointment-form textarea:focus {border-color:#2e5ce6; box-shadow:0 0 4px rgba(46,92,230,0.3);}
+    .btn-send {background:#4169e1; color:#fff; padding:10px 25px; font-size:0.95rem; font-weight:600; border:none; border-radius:3px; cursor:pointer; align-self:flex-start; transition:0.3s;}
+    .btn-send:hover {background:#244edb;}
+
+    /* MAP */
+    .map-container {width:100%; max-width:100%; height:400px; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.2); margin:40px auto;}
+    .map-container iframe {width:100%; height:100%; border:0;}
+
+    /* FOOTER */
+    .copy-footer {background:#f8f9fc; color:#555; text-align:center; padding:15px 20px; border-top:1px solid #e4e4e4; font-size:0.9rem;}
+
+    /* RESPONSIVE */
+    @media(max-width:992px){.content h1{font-size:3rem;}.nav-links{gap:15px;}}
+    @media(max-width:768px){
+      .menu-toggle{display:flex;}
+      .nav-links{position:fixed; top:70px; left:-100%; flex-direction:column; background: rgba(0,0,100,0.95); width:100%; height:100vh; justify-content:center; align-items:center; gap:25px; text-align:center; transition:left 0.4s;}
+      .nav-links.active{left:0;}
+      .phone-box{display:none;}
+      .dropdown-content{position:static; background:none; max-height:none; opacity:1; transition:none;}
+      .dropdown-content a{color:#69b9ff;}
+      .content h1{font-size:2.5rem;}
+      .appointment-section{padding:50px 20px;}
+    }
+    @media(max-width:480px){.logo img{width:55px;}.content h1{font-size:2rem;}}
+       /* FOOTER */
+.footer-section {
+    width: 100%;
+}
+
+.footer-bg {
+    background-image: url('10.jfif'); /* ka maye gurbin da naka image */
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: auto;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: wrap; /* allow wrapping for smaller screens */
+    gap: 30px;
+}
+
+.footer-col {
+    flex: 1 1 250px; /* responsive width */
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.call-number {
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 6px;
+    font-size: 20px;
+    color: white;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    background: #1A73E8;
+    color: #fff;
+}
+
+.copyright {
+    background: #152a4d;
+    text-align: center;
+    padding: 15px 10px;
+    color: white;
+    font-size: 14px;
+}
+
+
+.map-container {
+  width: 100%;
+  height: 400px; /* tsawon map */
+  margin-bottom: 20px; /* ɗan space tsakanin map da footer */
+  border-radius: 12px; /* idan kana son corner rounded */
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#map { 
+  width: 100%; 
+  height: 100%; 
+}
+
+.copy-footer {
+  background:#f8f9fc;
+  color:#555;
+  text-align:center;
+  padding:15px 20px;
+  border-top:1px solid #e4e4e4;
+  font-size:0.9rem;
+}
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="overlay"></div>
+  <nav class="navbar">
+    <div class="logo"><img src="tt.png" alt="Logo"></div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="NO.HTML">Home</a></li>
+      <li><a href="About.html">About</a></li>
+      <li class="dropdown" id="services-dropdown">
+        <a href="#" class="dropbtn">Services ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="services.html">Import</a></li>
+          <li><a href="#">Export</a></li>
+          <li><a href="#">Distribution</a></li>
+        </ul>
+      </li>
+      <li><a href="#" class="active">Contact</a></li>
+      <li><a href="product.html">Products</a></li>
+      <li><a href="#">Staff Mail</a></li>
+    </ul>
+    <div class="phone-box"><a href="tel:+2348025484444">+234-802-548-4444</a></div>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </div>
+  </nav>
+  <div class="content"><h1>CONTACT</h1></div>
+</header>
+
+<section class="contact-footer">
+  <div class="contact-container">
+    <div class="contact-header">
+      <p class="small-title">MAKE AN APPOINTMENT</p>
+      <h2>GET IN TOUCH</h2>
+    </div>
+    <div class="contact-info">
+      <div class="contact-box"><div class="icon"><img src="em.png" alt="Email Icon"></div><h3>EMAIL</h3><p><a href="mailto:manager@danturaku.ng">manager@danturaku.ng</a></p></div>
+      <div class="contact-box"><div class="icon"><img src="ph.png" alt="Phone Icon"></div><h3>PHONE</h3><p>+234-803-234-7118, +234-802-548-4444</p></div>
+      <div class="contact-box"><div class="icon"><img src="lo.png" alt="Location Icon"></div><h3>ADDRESS</h3><p>No. 25 Junguru Gabas behind NNPC Filling Station<br>Dawanau, DawakinTofa LGA Kano, Nigeria.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="appointment-section">
+  <div class="appointment-container">
+    <div class="form-header">
+      <p class="small-title">MESSAGE US</p>
+      <h2>FREE APPOINTMENT</h2>
+    </div>
+    <form action="appointment.php" method="POST" class="appointment-form">
+      <div class="form-group"><label for="name">Your Name (required)</label><input type="text" id="name" name="name" placeholder="Enter your name" required></div>
+      <div class="form-group"><label for="email">Your Email (required)</label><input type="email" id="email" name="email" placeholder="Enter your email" required></div>
+      <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" name="subject" placeholder="Enter subject"></div>
+      <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" rows="5" placeholder="Write your message here..."></textarea></div>
+      <button type="submit" class="btn-send">Send</button>
+    </form>
+  </div>
+</section>
+
+<div class="map-container">
+  <iframe src="https://www.google.com/maps?q=Dawanau%20Market%20Kano&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+  <section class="footer-section">
+    <div class="footer-bg">
+      <div class="footer-content">
+        <div class="footer-col left">
+          <p>Mon-Sat: 10:00 am – 5:00 pm</p>
+          <p>Saturday: 12:00 pm – 4:00 pm</p>
+        </div>
+
+        <div class="footer-col center">
+          <p>tijjanialmustapha8@gmail.com</p>
+          <p>director@yanshui.ng</p>
+
+          <h2 class="call-number">CALL – +234 802-841-5787</h2>
+
+          <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://google.com" target="_blank"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+
+        <div class="footer-col right">
+          <p>No. 25 Junguru Gabas<br>
+          behind NNPC Filling Station<br>
+          Dawakau, DawakinTofa LGA<br>
+          Kano, Nigeria</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="copyright">
+    <p>Copyright © 2025 Yashuni Agricultural Product Nigeria Limited | Powered by [Byte Leads Solution]</p>
+  </footer>
+
+
+<script>
+const menu = document.getElementById('mobile-menu');
+const navLinks = document.getElementById('nav-links');
+const servicesDropdown = document.getElementById('services-dropdown');
+const dropdownContent = servicesDropdown.querySelector('.dropdown-content');
+
+menu.addEventListener('click', ()=>{menu.classList.toggle('active'); navLinks.classList.toggle('active');});
+servicesDropdown.querySelector('.dropbtn').addEventListener('click',(e)=>{e.preventDefault(); servicesDropdown.classList.toggle('open'); dropdownContent.style.maxHeight=servicesDropdown.classList.contains('open')? dropdownContent.scrollHeight+"px":"0"; dropdownContent.style.opacity=servicesDropdown.classList.contains('open')? "1":"0";});
+dropdownContent.querySelectorAll('a').forEach(link=>{link.addEventListener('click', e=>{e.stopPropagation(); const href=link.getAttribute('href'); if(href&&href!=="#"){window.location.href=href;}});});
+document.addEventListener('click',(e)=>{if(!servicesDropdown.contains(e.target)){servicesDropdown.classList.remove('open'); dropdownContent.style.maxHeight="0"; dropdownContent.style.opacity="0";}});
+function initMap() {
+  const locations = [
+    { position: {lat: 12.018, lng: 8.616}, title: "Yanshuni Agricultural Product Nigeria Limited" },
+    { position: {lat: 12.017, lng: 8.618}, title: "Shi'at Mosque, Dawanau" },
+    { position: {lat: 12.019, lng: 8.614}, title: "Dawanau Market" }
+  ];
+
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 16,
+    center: locations[0].position
+  });
+
+  locations.forEach(loc => {
+    const marker = new google.maps.Marker({
+      position: loc.position,
+      map: map,
+      title: loc.title
+    });
+
+    const info = new google.maps.InfoWindow({ content: `<p>${loc.title}</p>` });
+    marker.addListener("click", () => info.open(map, marker));
+  });
+}
+</script>
+
+</body>
+</html>
