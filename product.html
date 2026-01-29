@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      min-height: 70vh;
+      background: url("b3.jpg") no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 60, 0.6);
+      z-index: 1;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .menu a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      color: #4e9eff;
+    }
+
+    .phone-box {
+      background: #4e9eff;
+      padding: 10px 22px;
+      border-radius: 4px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .phone-box:hover {
+      background: #2c7df3;
+    }
+
+    /* ===== HAMBURGER ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      z-index: 3;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 28px;
+      background: white;
+      margin: 5px 0;
+      border-radius: 10px;
+      transition: all 0.4s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .page-title {
+      position: relative;
+      z-index: 2;
+      font-size: 70px;
+      font-weight: 800;
+      padding: 0 60px 80px 60px;
+    }
+
+    @media (max-width: 1024px) {
+      .page-title {
+        font-size: 56px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 20px 40px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .menu {
+        flex-direction: column;
+        background: rgba(0, 0, 80, 0.95);
+        position: absolute;
+        top: 80px;
+        right: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        text-align: center;
+        transition: max-height 0.4s ease;
+      }
+
+      .menu a {
+        padding: 15px;
+        display: block;
+      }
+
+      .menu.open {
+        max-height: 400px;
+      }
+
+      .page-title {
+        font-size: 42px;
+        padding: 0 30px 60px 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-title {
+        font-size: 32px;
+        padding: 0 20px 50px 20px;
+      }
+
+      .phone-box {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+
+    
+
+    @media (max-width: 768px) {
+      .products-container h2 {
+        font-size: 2rem;
+      }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #152a4d;
+      color: #fff;
+      text-align: center;
+      padding: 25px 10px;
+      font-size: 14px;
+    }
+    /* ===== BASIC RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* ===== PRODUCTS SECTION ===== */
+    .products-section {
+      padding: 80px 20px;
+      background: #f9faff;
+      text-align: center;
+    }
+
+    .products-section h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #2e5ce6;
+      margin-bottom: 40px;
+    }
+
+    .products-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      width: 320px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    .product-card h3 {
+      font-size: 1.2rem;
+      color: #2e5ce6;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin: 15px 0 20px;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 992px) {
+      .product-card {
+        width: 280px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .products-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .product-card {
+        width: 90%;
+      }
+
+      .products-section h2 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-card img {
+        height: 200px;
+      }
+
+      .product-card h3 {
+        font-size: 1rem;
+      }
+
+      .products-section h2 {
+        font-size: 1.6rem;
+      }
+    }
+        *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+    body{background:#f6f6f6;color:#222}
+
+    .container{max-width:1200px;margin:auto;padding:40px 20px}
+    h1{text-align:center;margin-bottom:40px;font-size:32px}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:30px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(0,0,0,.08);
+      transition:.3s ease;
+    }
+    .card:hover{transform:translateY(-6px)}
+
+    .card img{
+      width:100%;
+      height:230px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .card h3{
+      padding:15px;
+      text-align:center;
+      font-size:18px;
+      color:#0b57ff;
+      letter-spacing:1px;
+    }
+
+    @media(max-width:900px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+    }
+
+    @media(max-width:600px){
+      .grid{grid-template-columns:1fr}
+      h1{font-size:26px}
+    }
+       /* FOOTER */
+.footer-section {
+    width: 100%;
+}
+
+.footer-bg {
+    background-image: url('10.jfif'); /* ka maye gurbin da naka image */
+    background-size: cover;
+    background-position: center;
+    padding: 80px 20px;
+    position: relative;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: auto;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: wrap; /* allow wrapping for smaller screens */
+    gap: 30px;
+}
+
+.footer-col {
+    flex: 1 1 250px; /* responsive width */
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.call-number {
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icons a {
+    display: inline-block;
+    margin: 0 6px;
+    font-size: 20px;
+    color: white;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    background: #1A73E8;
+    color: #fff;
+}
+
+.copyright {
+    background: #152a4d;
+    text-align: center;
+    padding: 15px 10px;
+    color: white;
+    font-size: 14px;
+}
+
+/* MEDIA QUERIES */
+@media(max-width: 900px){
+    .footer-content {
+        justify-content: center;
+    }
+    .footer-col {
+        flex: 1 1 45%;
+    }
+}
+
+@media(max-width: 600px){
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 25px;
+    }
+    .footer-col {
+        flex: 1 1 100%;
+    }
+    .call-number {
+        font-size: 24px;
+    }
+    .social-icons a {
+        padding: 8px;
+        font-size: 18px;
+        margin: 5px;
+    }
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px){
+    .footer-col { width: 48%; } /* two columns on tablet */
+}
+
+@media(max-width: 600px){
+    .footer-content { flex-direction: column; text-align: center; }
+    .footer-col { width: 100%; }
+    .call-number { font-size: 24px; }
+    .social-icons a { padding: 8px; font-size: 18px; margin: 5px; }
+}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <img src="tt.png" class="logo" alt="Logo" />
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="menu" id="menu">
+        <a href="index.html.HTML">Home</a>
+        <a href="About.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="Contact.html">Contact</a>
+        <a href="#" class="active">Products</a>
+        <a href="#">Staff Mail</a>
+        <a href="tel:+2348025484444" class="phone-box">+234-802-548-4444</a>
+      </div>
+    </nav>
+    <h1 class="page-title">PRODUCTS</h1>
+  </header>
+
+  <section class="container">
+    <h1>Our Agricultural Commodities</h1>
+
+    <div class="grid">
+      <div class="card"><img src="Sesame.jpg"><h3>SESAME</h3></div>
+      <div class="card"><img src="soya.jpg"><h3>SOYA BEAN</h3></div>
+      <div class="card"><img src="gin.jpeg"><h3>GINGER</h3></div>
+
+      <div class="card"><img src="habi.jpeg"><h3>HIBISCUS</h3></div>
+      <div class="card"><img src="mil.png"><h3>MILLET</h3></div>
+      <div class="card"><img src="mai.png"><h3>MAIZE</h3></div>
+
+      <div class="card"><img src="cas.png"><h3>CASSIA TORA</h3></div>
+      <div class="card"><img src="groun.png"><h3>GROUNDNUT</h3></div>
+      <div class="card"><img src="pig.png"><h3>PIGEON PEA</h3></div>
+
+      <div class="card"><img src="paddy.png"><h3>PADDY RICE</h3></div>
+      <div class="card"><img src="cassa.png"><h3>CASSAVA</h3></div>
+      <div class="card"><img src="wh.png" alt=""><h3>WHITE BEANS</h3></div>
+
+      <div class="card"><img src="sor.png"><h3>SORGHUM</h3></div>
+    </div>
+  </section>
+
+  <section class="footer-section">
+    <div class="footer-bg">
+      <div class="footer-content">
+        <div class="footer-col left">
+          <p>Mon-Sat: 10:00 am – 5:00 pm</p>
+          <p>Saturday: 12:00 pm – 4:00 pm</p>
+        </div>
+
+        <div class="footer-col center">
+          <p>tijjanialmustapha8@gmail.com</p>
+          <p>director@yanshui.ng</p>
+
+          <h2 class="call-number">CALL – +234 802-841-5787</h2>
+
+          <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://google.com" target="_blank"><i class="fab fa-google"></i></a>
+                </div>
+            </div>
+
+        <div class="footer-col right">
+          <p>No. 25 Junguru Gabas<br>
+          behind NNPC Filling Station<br>
+          Dawakau, DawakinTofa LGA<br>
+          Kano, Nigeria</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="copyright">
+    <p>Copyright © 2025 Yashuni Agricultural Product Nigeria Limited | Powered by [Byte Leads Solution]</p>
+  </footer>
+  <script>
+    // Mobile Menu Toggle
+    const hamburger = document.getElementById("hamburger");
+    const menu = document.getElementById("menu");
+
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("active");
+      menu.classList.toggle("open");
+    });
+  </script>
+</body>
+</html>
